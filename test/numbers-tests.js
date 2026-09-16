@@ -27,6 +27,9 @@ describe('core-js-numbers', () => {
   it.optional('getRectangleArea should return a square of rectangle', () => {
     assert.equal(tasks.getRectangleArea(5, 10), 50);
     assert.equal(tasks.getRectangleArea(5, 5), 25);
+    assert.equal(tasks.getRectangleArea(-5, 5), NaN);
+    assert.equal(tasks.getRectangleArea(-5, -5), NaN);
+    assert.equal(tasks.getRectangleArea('as', 'df'), NaN);
     assert.equal(
       forbidden.isCommented(tasks.getRectangleArea),
       false,
@@ -40,6 +43,10 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.getCircleCircumference(5), 31.41592653589793);
       assert.equal(tasks.getCircleCircumference(3.14), 19.729201864543903);
       assert.equal(tasks.getCircleCircumference(0), 0);
+      assert.equal(tasks.getCircleCircumference(-0), 0);
+      assert.equal(tasks.getCircleCircumference(-5), NaN);
+      assert.equal(tasks.getCircleCircumference(-3.14), NaN);
+      assert.equal(tasks.getCircleCircumference('a'), NaN);
       assert.equal(
         forbidden.isCommented(tasks.getCircleCircumference),
         false,
@@ -52,6 +59,9 @@ describe('core-js-numbers', () => {
     assert.equal(tasks.getAverage(5, 5), 5);
     assert.equal(tasks.getAverage(10, 0), 5);
     assert.equal(tasks.getAverage(-3, 3), 0);
+    assert.equal(tasks.getAverage(1, 2), 1.5);
+    assert.equal(tasks.getAverage(-3, -3), -3);
+    assert.equal(tasks.getAverage('a', -3), NaN);
     assert.equal(
       tasks.getAverage(Number.MAX_VALUE - 2, Number.MAX_VALUE),
       Number.MAX_VALUE - 1
@@ -72,6 +82,7 @@ describe('core-js-numbers', () => {
     () => {
       assert.equal(tasks.getDistanceBetweenPoints(0, 0, 0, 1), 1);
       assert.equal(tasks.getDistanceBetweenPoints(0, 0, 1, 0), 1);
+      assert.equal(tasks.getDistanceBetweenPoints('a', 0, 1, 0), NaN);
       assert.equal(
         tasks.getDistanceBetweenPoints(-5, 0, 10, -10),
         18.027756377319946
@@ -90,6 +101,8 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.getLinearEquationRoot(5, -10), 2);
       assert.equal(tasks.getLinearEquationRoot(1, 8), -8);
       assert.equal(tasks.getLinearEquationRoot(5, 0), 0);
+      assert.equal(tasks.getLinearEquationRoot('a', 0), NaN);
+      assert.equal(tasks.getLinearEquationRoot(5, 'a'), NaN);
       assert.equal(
         forbidden.isCommented(tasks.getLinearEquationRoot),
         false,
@@ -105,6 +118,7 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.getAngleBetweenVectors(0, 1, 0, -1), Math.PI);
       assert.equal(tasks.getAngleBetweenVectors(0, -1, 1, 0), Math.PI / 2);
       assert.equal(tasks.getAngleBetweenVectors(0, 1, 0, 1), 0);
+      assert.equal(tasks.getAngleBetweenVectors(0, 1, 0, 'a'), NaN);
       assert.equal(
         forbidden.isCommented(tasks.getAngleBetweenVectors),
         false,
@@ -119,6 +133,8 @@ describe('core-js-numbers', () => {
     assert.equal(tasks.getLastDigit(11), 1);
     assert.equal(tasks.getLastDigit(5), 5);
     assert.equal(tasks.getLastDigit(0), 0);
+    assert.equal(tasks.getLastDigit(-5), 5);
+    assert.equal(tasks.getLastDigit('a'), NaN);
     assert.equal(
       forbidden.isCommented(tasks.getLastDigit),
       false,
@@ -133,6 +149,11 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.parseNumberFromString('100'), 100);
       assert.equal(tasks.parseNumberFromString('37'), 37);
       assert.equal(tasks.parseNumberFromString('-525.5'), -525.5);
+      assert.equal(tasks.parseNumberFromString('a'), NaN);
+      assert.equal(tasks.parseNumberFromString('-a'), NaN);
+      assert.equal(tasks.parseNumberFromString('1px'), 1);
+      assert.equal(tasks.parseNumberFromString('-1px'), -1);
+      assert.equal(tasks.parseNumberFromString('a-1px'), NaN);
       assert.equal(
         forbidden.isCommented(tasks.parseNumberFromString),
         false,
@@ -147,6 +168,7 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.getParallelepipedDiagonal(1, 1, 1), Math.sqrt(3));
       assert.equal(tasks.getParallelepipedDiagonal(3, 3, 3), Math.sqrt(27));
       assert.equal(tasks.getParallelepipedDiagonal(1, 2, 3), Math.sqrt(14));
+      assert.equal(tasks.getParallelepipedDiagonal('a', 2, 3), NaN);
       assert.equal(
         forbidden.isCommented(tasks.getParallelepipedDiagonal),
         false,
@@ -166,6 +188,12 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.roundToPowerOfTen(9678, 1), 9680);
       assert.equal(tasks.roundToPowerOfTen(9678, 2), 9700);
       assert.equal(tasks.roundToPowerOfTen(9678, 3), 10000);
+      assert.equal(tasks.roundToPowerOfTen(9678, 4), 10000);
+      assert.equal(tasks.roundToPowerOfTen(9678, 5), 0);
+      assert.equal(tasks.roundToPowerOfTen(5, 2), 0);
+      assert.equal(tasks.roundToPowerOfTen(4, 0), 4);
+      assert.equal(tasks.roundToPowerOfTen(12, 1), 10);
+      assert.equal(tasks.roundToPowerOfTen('a', 3), NaN);
       assert.equal(
         forbidden.isCommented(tasks.roundToPowerOfTen),
         false,
@@ -216,6 +244,8 @@ describe('core-js-numbers', () => {
     assert.equal(tasks.getCube(3), 27);
     assert.equal(tasks.getCube(-2), -8);
     assert.equal(tasks.getCube(0), 0);
+    assert.equal(tasks.getCube('1'), 1);
+    assert.equal(tasks.getCube('a'), NaN);
     assert.equal(
       forbidden.isCommented(tasks.getCube),
       false,
@@ -232,6 +262,12 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.getFibonacciNumber(2), 1);
       assert.equal(tasks.getFibonacciNumber(3), 2);
       assert.equal(tasks.getFibonacciNumber(10), 55);
+      assert.equal(tasks.getFibonacciNumber('a'), NaN);
+      assert.equal(tasks.getFibonacciNumber(1.1), NaN);
+      assert.equal(tasks.getFibonacciNumber(-1), NaN);
+      assert.equal(tasks.getFibonacciNumber(-30), NaN);
+      assert.equal(tasks.getFibonacciNumber(49), 7778742049);
+      assert.equal(tasks.getFibonacciNumber(Infinity), NaN);
       assert.equal(
         forbidden.isCommented(tasks.getFibonacciNumber),
         false,
@@ -244,6 +280,10 @@ describe('core-js-numbers', () => {
     assert.equal(tasks.getSumToN(5), 15);
     assert.equal(tasks.getSumToN(10), 55);
     assert.equal(tasks.getSumToN(1), 1);
+    assert.equal(tasks.getSumToN(0), 0);
+    assert.equal(tasks.getSumToN(-1), NaN);
+    assert.equal(tasks.getSumToN(-10), NaN);
+    assert.equal(tasks.getSumToN('a'), NaN);
     assert.equal(
       forbidden.isCommented(tasks.getSumToN),
       false,
@@ -258,6 +298,16 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.getSumOfDigits(202), 4);
       assert.equal(tasks.getSumOfDigits(5), 5);
       assert.equal(tasks.getSumOfDigits(101010101010), 6);
+      assert.equal(tasks.getSumOfDigits(101.01010101), 6);
+      assert.equal(tasks.getSumOfDigits('a'), NaN);
+      assert.equal(tasks.getSumOfDigits(1.1), 2);
+      assert.equal(tasks.getSumOfDigits(-1), 1);
+      assert.equal(tasks.getSumOfDigits(-10), 1);
+      assert.equal(tasks.getSumOfDigits('NaN'), NaN);
+      assert.equal(tasks.getSumOfDigits(NaN), NaN);
+      assert.equal(tasks.getSumOfDigits('Infinity'), NaN);
+      assert.equal(tasks.getSumOfDigits(Infinity), NaN);
+      assert.equal(tasks.getSumOfDigits(undefined), NaN);
       assert.equal(
         forbidden.isCommented(tasks.getSumOfDigits),
         false,
@@ -269,6 +319,11 @@ describe('core-js-numbers', () => {
   it.optional(
     'isPowerOfTwo returns true if the given number is a power of two, false otherwise',
     () => {
+      assert.equal(
+        tasks.isPowerOfTwo(2 ** 29),
+        true,
+        'the value 29 is a power of 2'
+      );
       assert.equal(tasks.isPowerOfTwo(4), true, 'the value 4 is a power of 2');
       assert.equal(
         tasks.isPowerOfTwo(16),
@@ -301,6 +356,15 @@ describe('core-js-numbers', () => {
   it.optional('getSine the sine of a number', () => {
     assert.equal(tasks.getSine(0), 0);
     assert.equal(tasks.getSine(Math.PI / 2), 1);
+    assert.equal(tasks.getSine(Number.MAX_VALUE), 0.004961954789184062);
+    assert.equal(tasks.getSine(100000), 0.03574879797201651);
+    assert.equal(tasks.getSine('a'), NaN);
+    assert.equal(tasks.getSine(-1), -0.8414709848078965);
+    assert.equal(tasks.getSine('1'), 0.8414709848078965);
+    assert.equal(tasks.getSine('Infinity'), NaN);
+    assert.equal(tasks.getSine(NaN), NaN);
+    assert.equal(tasks.getSine(Infinity), NaN);
+    assert.equal(tasks.getSine(undefined), NaN);
     assert.equal(
       forbidden.isCommented(tasks.getSine),
       false,
@@ -319,6 +383,15 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.numberToStringInBase(-15, 2), '-1111');
       assert.equal(tasks.numberToStringInBase(123, 10), '123');
       assert.equal(tasks.numberToStringInBase(999, 16), '3e7');
+      assert.equal(tasks.numberToStringInBase('a', 2), 'NaN');
+      assert.equal(tasks.numberToStringInBase(2, 'a'), 'NaN');
+      assert.equal(tasks.numberToStringInBase(-1, -1), 'NaN');
+      assert.equal(tasks.numberToStringInBase(20, -1), 'NaN');
+      assert.equal(tasks.numberToStringInBase('1', '2'), 1);
+      assert.equal(tasks.numberToStringInBase('Infinity', 16), 'Infinity');
+      assert.equal(tasks.numberToStringInBase(NaN, 8), 'NaN');
+      assert.equal(tasks.numberToStringInBase(Infinity, 16), 'Infinity');
+      assert.equal(tasks.numberToStringInBase(undefined, 2), 'NaN');
       assert.equal(
         forbidden.isCommented(tasks.numberToStringInBase),
         false,
@@ -334,6 +407,15 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.toExponential(12345, 2), '1.23e+4');
       assert.equal(tasks.toExponential(-12345, 3), '-1.235e+4');
       assert.equal(tasks.toExponential(12345, 1), '1.2e+4');
+      assert.equal(tasks.toExponential(12345, 10), '1.2345000000e+4');
+      assert.equal(tasks.toExponential(NaN, 2), 'NaN');
+      assert.equal(tasks.toExponential('NaN', 2), 'NaN');
+      assert.equal(tasks.toExponential(Infinity, 2), 'Infinity');
+      assert.equal(tasks.toExponential('Infinity', 2), 'Infinity');
+      assert.equal(tasks.toExponential(undefined, 2), 'NaN');
+      assert.equal(tasks.toExponential('undefined', 2), 'NaN');
+      assert.equal(tasks.toExponential(12345, '2'), '1.23e+4');
+      assert.equal(tasks.toExponential('a', 2), 'NaN');
       assert.equal(
         forbidden.isCommented(tasks.toExponential),
         false,
@@ -348,6 +430,14 @@ describe('core-js-numbers', () => {
     () => {
       assert.equal(tasks.toFixed(12345, 2), 12345.0);
       assert.equal(tasks.toFixed(12.345, 1), 12.3);
+      assert.equal(tasks.toFixed(NaN, 2), 'NaN');
+      assert.equal(tasks.toFixed('NaN', 2), 'NaN');
+      assert.equal(tasks.toFixed(Infinity, 2), 'Infinity');
+      assert.equal(tasks.toFixed('Infinity', 2), 'Infinity');
+      assert.equal(tasks.toFixed(undefined, 2), 'NaN');
+      assert.equal(tasks.toFixed('undefined', 2), 'NaN');
+      assert.equal(tasks.toFixed(12345, '2'), 12345.0);
+      assert.equal(tasks.toFixed('a', 2), 'NaN');
       assert.equal(
         forbidden.isCommented(tasks.toFixed),
         false,
@@ -362,6 +452,13 @@ describe('core-js-numbers', () => {
     () => {
       assert.equal(tasks.toPrecision(12345, 7), 12345.0);
       assert.equal(tasks.toPrecision(12.345, 4), 12.35);
+      assert.equal(tasks.toPrecision(12.345, 1), '1e+1');
+      assert.equal(tasks.toPrecision(12.345, 0), 'NaN');
+      assert.equal(
+        tasks.toPrecision(12.345, 30),
+        12.3450000000000006394884621841
+      );
+      assert.equal(tasks.toPrecision(12.345, 101), 'NaN');
       assert.equal(
         forbidden.isCommented(tasks.toPrecision),
         false,
@@ -377,6 +474,14 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.getNumberValue(Number(5)), 5);
       assert.equal(tasks.getNumberValue(Number(-5)), -5);
       assert.equal(tasks.getNumberValue(Number(0)), 0);
+      assert.equal(tasks.getNumberValue(NaN), NaN);
+      assert.equal(tasks.getNumberValue(Infinity), Infinity);
+      assert.equal(tasks.getNumberValue(-Infinity), -Infinity);
+      assert.equal(tasks.getNumberValue(undefined), undefined);
+      assert.equal(tasks.getNumberValue(''), 0);
+      assert.equal(tasks.getNumberValue('0'), 0);
+      assert.equal(tasks.getNumberValue('NaN'), 'NaN');
+      assert.equal(tasks.getNumberValue(null), null);
       assert.equal(
         forbidden.isCommented(tasks.getNumberValue),
         false,
@@ -394,6 +499,11 @@ describe('core-js-numbers', () => {
         false,
         'value Infinity is not a number'
       );
+      assert.equal(
+        tasks.isNumber(-Infinity),
+        false,
+        'value -Infinity is not a number'
+      );
       assert.equal(tasks.isNumber(NaN), false, 'value NaN is not a number');
       assert.equal(tasks.isNumber(0), true, 'value 0 is a number');
       assert.equal(
@@ -405,6 +515,11 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.isNumber(5), true, 'value 5 is a number');
       assert.equal(tasks.isNumber('5'), false, 'value "5" is not a number');
       assert.equal(tasks.isNumber(null), false, 'value null is not a number');
+      assert.equal(
+        tasks.isNumber(undefined),
+        false,
+        'value undefined is not a number'
+      );
       assert.equal(tasks.isNumber(''), false, 'value "" is not a number');
       assert.equal(tasks.isNumber(true), false, 'value true is not a number');
       assert.equal(tasks.isNumber(10), true, 'value 10 is a number');
@@ -424,6 +539,16 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.isInteger(5.1), false, 'value 5.1 is not an integer');
       assert.equal(tasks.isInteger('5'), false, 'value "5" is not an integer');
       assert.equal(
+        tasks.isInteger(null),
+        false,
+        'value null is not an integer'
+      );
+      assert.equal(
+        tasks.isInteger(undefined),
+        false,
+        'value undefined is not an integer'
+      );
+      assert.equal(
         tasks.isInteger(3 / 2),
         false,
         'value 3/2 is not an integer'
@@ -441,6 +566,9 @@ describe('core-js-numbers', () => {
     assert.equal(tasks.getFloatOnString('4.567abcdefgh'), 4.567);
     assert.equal(tasks.getFloatOnString('4.567abcdefgh123'), 4.567);
     assert.equal(tasks.getFloatOnString('abcdefgh'), NaN);
+    assert.equal(tasks.getFloatOnString(null), NaN);
+    assert.equal(tasks.getFloatOnString(undefined), NaN);
+    assert.equal(tasks.getFloatOnString(NaN), NaN);
     assert.equal(
       forbidden.isCommented(tasks.getFloatOnString),
       false,
@@ -456,6 +584,15 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.getIntegerOnString('abcdefgh', 10), NaN);
       assert.equal(tasks.getIntegerOnString('1.234', 2), 1);
       assert.equal(tasks.getIntegerOnString('10', 8), 8);
+      assert.equal(tasks.getIntegerOnString(null, 8), NaN);
+      assert.equal(tasks.getIntegerOnString(undefined, 8), NaN);
+      assert.equal(tasks.getIntegerOnString(NaN, 8), NaN);
+      assert.equal(tasks.getIntegerOnString('42', -1), NaN);
+      assert.equal(tasks.getIntegerOnString('41', 0), 41);
+      assert.equal(tasks.getIntegerOnString('40', 1), NaN);
+      assert.equal(tasks.getIntegerOnString('47', 36), 151);
+      assert.equal(tasks.getIntegerOnString('44', 37), NaN);
+      assert.equal(tasks.getIntegerOnString('45', 100), NaN);
       assert.equal(
         forbidden.isCommented(tasks.getIntegerOnString),
         false,
@@ -493,6 +630,11 @@ describe('core-js-numbers', () => {
     () => {
       assert.equal(tasks.roundToSmallestInteger(5.9), 5);
       assert.equal(tasks.roundToSmallestInteger(-5.1), -6);
+      assert.equal(tasks.roundToSmallestInteger(null), 0);
+      assert.equal(tasks.roundToSmallestInteger(undefined), NaN);
+      assert.equal(tasks.roundToSmallestInteger(NaN), NaN);
+      assert.equal(tasks.roundToSmallestInteger(Infinity), Infinity);
+      assert.equal(tasks.roundToSmallestInteger('null'), NaN);
       assert.equal(
         forbidden.isCommented(tasks.roundToSmallestInteger),
         false,
@@ -549,6 +691,10 @@ describe('core-js-numbers', () => {
   it.optional('getSumOfNumbers returns the sum of numbers', () => {
     assert.equal(tasks.getSumOfNumbers(1, 2, 3), 6);
     assert.equal(tasks.getSumOfNumbers(0.1, 0.2, 0.3), 0.6);
+    assert.equal(tasks.getSumOfNumbers(null, 0.2, 0.3), NaN);
+    assert.equal(tasks.getSumOfNumbers(undefined, 0.2, 0.3), NaN);
+    assert.equal(tasks.getSumOfNumbers(Infinity, 0.2, 0.3), NaN);
+    assert.equal(tasks.getSumOfNumbers(NaN, 0.2, 0.3), NaN);
     assert.equal(
       forbidden.isCommented(tasks.getSumOfNumbers),
       false,
@@ -623,6 +769,8 @@ describe('core-js-numbers', () => {
       assert.equal(tasks.getCountOfOddNumbers(-5), 3);
       assert.equal(tasks.getCountOfOddNumbers(-10), 5);
       assert.equal(tasks.getCountOfOddNumbers(-15), 8);
+      assert.equal(tasks.getCountOfOddNumbers(-15.1), 8);
+      assert.equal(tasks.getCountOfOddNumbers(-15.7), 8);
       assert.equal(
         forbidden.isCommented(tasks.getCountOfOddNumbers),
         false,
